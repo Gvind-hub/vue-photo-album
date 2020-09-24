@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Photo Album</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.min.css">
+</head>
+<body>
+
+<template id="pagination-template">
+    <div class="pagination">
+        <div class="pagination__inner">
+            <ul class="pagination__items">
+                <li class="pagination__item" v-if="hasFirst()"><a href="#" @click="changePage(1)">1</a></li>
+                <li class="pagination__ellipsis" v-if="hasFirst()">...</li>
+                <li class="pagination__item" :class="{active: current == page}" v-for="page in pages">
+                    <a href="#" @click="changePage(page)" :class="{active: current == page}">
+                        {{ page }}
+                    </a>
+                </li>
+                <li class="pagination__ellipsis" v-if="hasLast()">...</li>
+                <li class="pagination__item" v-if="hasLast()"><a href="#" @click="changePage(totalPages)">{{ totalPages }}</a></li>
+            </ul>
+        </div>
+    </div>
+</template>
+
+<main id="app">
+    <section class="photos">
+        <div class="container">
+            <div class="photos__inner">
+                <div class="card" v-for="(photo, index) in photos">
+                    <div class="card__author">
+                        <img class="card__avatar" :src="photo.user.profile_image.small" alt="avatar">
+                        <div class="card__author-id">
+                            <p class="card__name">{{photo.user.name}}</p>
+                            <a class="card__user-nick" :href="photo.user.links.html" target="_blank">@{{photo.user
+                                .username}}</a>
+                        </div>
+                    </div>
+                    <img class="card__photo" :src="photo.urls.small" alt="photo">
+                    <p v-if="views[index]" class="card__views">{{views[index]}}</p>
+                    <p v-else class="card__views">No views</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <pagination :current="currentPage" :total="totalPhotos" :per-page="perPage" @page-changed="fetchPhotos"></pagination>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="js/pagination.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+@media (min-width: 480px) {
+  .container {
+    width: 440px;
+  }
+  .card__photo {
+    height: 300px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    width: 660px;
+  }
+  .photos__inner {
+    width: 100%;
+  }
+  .card {
+    width: 330px;
+    display: inline-block;
+    &:nth-child(odd) {
+      padding-right: 10px;
+    }
+  }
+  .card__photo {
+    width: 320px;
+    height: 230px;
+  }
+}
+
+@media (min-width: 1000px) {
+
+}
